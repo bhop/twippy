@@ -1,12 +1,14 @@
 package com.github.bhop.twippy.rest
 
 import cats.effect.Effect
-import com.github.bhop.twippy.core.http.Auth.{AccessToken, ConsumerToken}
-import com.github.bhop.twippy.core.http.HttpClient
-import com.github.bhop.twippy.rest.clients.{AccountClient, ApplicationClient}
+import com.github.bhop.twippy.core.http.HttpBackend
+import com.github.bhop.twippy.rest.clients.ApplicationClient
 
-class TwippyRestClient[F[_]: Effect] private (consumerToken: ConsumerToken, accessToken: AccessToken)
-  extends AccountClient[F] with ApplicationClient[F] {
+class TwippyRestClient[F[_]: Effect] private (http: HttpBackend[F])
+  extends ApplicationClient[F](http)
 
-  protected val http: HttpClient[F] = ???
+object TwippyRestClient {
+
+  def apply[F[_]: Effect](implicit http: HttpBackend[F]): TwippyRestClient[F] =
+    new TwippyRestClient[F](http)
 }

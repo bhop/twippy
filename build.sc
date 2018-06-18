@@ -9,9 +9,16 @@ object stream extends TwippyModule {
   override def moduleDeps = Seq(core)
 }
 
+object blazeHttpBackend extends TwippyModule {
+  override def moduleDeps = Seq(core)
+  override def ivyDeps = Agg(
+    ivy"org.http4s::http4s-blaze-client:0.18.12"
+  )
+}
+
 object core extends TwippyModule {
-  def ivyDeps = Agg(
-    ivy"io.circe::circe-core:0.9.3"
+  override def ivyDeps = Agg(
+    ivy"org.typelevel::cats-effect:1.0.0-RC2"
   )
 }
 

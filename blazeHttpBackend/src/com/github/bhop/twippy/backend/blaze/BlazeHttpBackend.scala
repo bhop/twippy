@@ -1,16 +1,20 @@
-package com.github.bhop.twippy.backend
+package com.github.bhop.twippy.backend.blaze
 
 import cats.effect.Effect
 import com.github.bhop.twippy.core.http.HttpBackend
 import com.github.bhop.twippy.core.http.HttpBackend.HttpRequest
 import org.http4s.client.Client
 import org.http4s.client.blaze.{BlazeClientConfig, Http1Client}
+import org.http4s.circe._
+import io.circe.generic.auto._
 
 import cats.implicits._
 
+
 class BlazeHttpBackend[F[_]: Effect](client: Client[F]) extends HttpBackend[F] {
 
-  override def send[R](request: HttpRequest): F[R] = ???
+  override def send[R](request: HttpRequest): F[R] =
+    client.expect[R]("")(jsonOf[F, R])
 
   override def release: F[Unit] = client.shutdown
 }

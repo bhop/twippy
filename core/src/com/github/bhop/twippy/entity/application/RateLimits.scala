@@ -1,8 +1,6 @@
-package com.github.bhop.twippy.core.entity.application
+package com.github.bhop.twippy.entity.application
 
-import com.github.bhop.twippy.core.entity.application.RateLimits.{RateLimitContext, Resources}
-
-final case class RateLimits(rate_limit_context: RateLimitContext, resources: Resources)
+final case class RateLimits(rate_limit_context: RateLimits.RateLimitContext, resources: RateLimits.Resources)
 
 object RateLimits {
 

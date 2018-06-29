@@ -1,21 +1,19 @@
 import mill._
 import mill.scalalib._
 
-object rest extends TwippyModule {
-  override def moduleDeps = Seq(core)
-}
-
-object stream extends TwippyModule {
-  override def moduleDeps = Seq(core)
-}
-
-object blazeHttpBackend extends TwippyModule {
+object blaze extends TwippyModule {
   override def moduleDeps = Seq(core)
   override def ivyDeps = Agg(
-    ivy"org.http4s::http4s-blaze-client:0.18.12",
-    ivy"org.http4s::http4s-circe:0.18.12",
-    ivy"io.circe::circe-generic:0.9.3"
+    ivy"org.http4s::http4s-blaze-client:0.18.12"
   )
+
+  object circe extends TwippyModule {
+    override def moduleDeps = Seq(blaze)
+    override def ivyDeps = Agg(
+      ivy"org.http4s::http4s-circe:0.18.12",
+      ivy"io.circe::circe-generic:0.9.3"
+    )
+  }
 }
 
 object core extends TwippyModule {

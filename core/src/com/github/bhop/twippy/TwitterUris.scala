@@ -1,6 +1,6 @@
-package com.github.bhop.twippy.core
+package com.github.bhop.twippy
 
-object TwitterUris {
+private[twippy] object TwitterUris {
 
   private[twippy] val twitterRestUri: String = "https://api.twitter.com/1.1"
 

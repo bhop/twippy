@@ -1,8 +1,8 @@
-package com.github.bhop.twippy.core.entity.application
-
-import com.github.bhop.twippy.core.entity.application.Resource._
+package com.github.bhop.twippy.entity.application
 
 sealed trait Resource {
+
+  import Resource._
 
   def value: String =
     this match {

@@ -1,25 +1,29 @@
 import mill._
 import mill.scalalib._
 
+object circe extends TwippyModule {
+  override def moduleDeps = Seq(core)
+  override def ivyDeps = Agg(
+    ivy"io.circe::circe-parser:0.9.3",
+    ivy"io.circe::circe-generic:0.9.3"
+  )
+}
+
 object blaze extends TwippyModule {
   override def moduleDeps = Seq(core)
   override def ivyDeps = Agg(
     ivy"org.http4s::http4s-blaze-client:0.18.12"
   )
-
-  object circe extends TwippyModule {
-    override def moduleDeps = Seq(blaze)
-    override def ivyDeps = Agg(
-      ivy"org.http4s::http4s-circe:0.18.12",
-      ivy"io.circe::circe-generic:0.9.3"
-    )
-  }
 }
 
 object core extends TwippyModule {
   override def ivyDeps = Agg(
     ivy"org.typelevel::cats-effect:1.0.0-RC2"
   )
+}
+
+object tests extends TwippyModule {
+  override def moduleDeps = Seq(blaze, circe)
 }
 
 trait TwippyModule extends ScalaModule {

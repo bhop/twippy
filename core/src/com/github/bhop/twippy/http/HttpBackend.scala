@@ -4,7 +4,7 @@ import com.github.bhop.twippy.http.HttpBackend.HttpRequest
 
 private[twippy] trait HttpBackend[F[_]] {
 
-  def send[R](request: HttpRequest): F[R]
+  def send[R](request: HttpRequest)(decoder: String => F[R]): F[R]
 
   def release: F[Unit]
 }
@@ -13,7 +13,7 @@ private[twippy] object HttpBackend {
 
   final case class QueryParam(key: String, value: String)
 
-  final case class HttpUri(data: String) extends AnyVal
+  final case class HttpUri(path: String, query: List[QueryParam] = List.empty)
 
   final case class ConsumerToken(token: String, secret: String)
 
@@ -23,9 +23,8 @@ private[twippy] object HttpBackend {
 
   sealed trait HttpRequest {
     def uri: HttpUri
-    def queryParams: List[QueryParam]
     def auth: Auth
   }
 
-  final case class Get(uri: HttpUri, queryParams: List[QueryParam], auth: Auth) extends HttpRequest
+  final case class Get(uri: HttpUri, auth: Auth) extends HttpRequest
 }
